@@ -1,0 +1,11 @@
+# Lazy plugin manager state
+lazy-lock.json
+
+# Local undo history
+undo/
+
+# Mason binaries
+mason/bin/
+mason/packages/
+mason/share/
+
