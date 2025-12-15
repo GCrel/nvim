@@ -3,9 +3,9 @@ return {
     main = "ibl",
     ---@module "ibl"
     ---@type ibl.config
+    event = { "BufReadPost", "BufNewFile" },
     opts = {},
     config = function()
         require("ibl").setup()
     end
-
 }

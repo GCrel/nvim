@@ -1,26 +1,30 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    event = "BufReadPost",
     build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
+    ops = {
+        ensure_installed = { "lua" },
 
-    -- Avoid error in windows
-    build = function()
-        require("nvim-treesitter.install").update({ with_sync = true })
-    end,
-    dependencies = {
-        {
-            "nvim-treesitter/playground",
-            cmd = "TSPlaygroundToggle",
+        sync_install = false,
+        auto_install = true,
+      
+        highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
         },
-        "nvim-treesitter/nvim-treesitter-refactor",
-        "nvim-treesitter/nvim-treesitter-textobjects",
-    },
 
-    config = function()
-        require("nvim-treesitter.configs").setup({
-            ensure_installed = { "lua" },
-            highlight = { enable = true },
-            indent = { enable = true },
-        })
-    end,
+        indent = {
+            enable = true,
+        },
+
+        incremental_selection = {
+            enable = true,
+            keymaps = {
+                init_selection = "<C-space>",
+                node_incremental = "<C-space>",
+                scope_incremental = false,
+                node_decremental = "<bs>",
+            },
+        },
+    }
 }
