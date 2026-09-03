@@ -19,7 +19,7 @@ return {
       end,
       border = "shadow",
       shade_terminals = false,
-      shell = "nu", -- shell preference
+      shell = "zsh", -- shell preference
     }
   end,
 }

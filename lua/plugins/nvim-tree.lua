@@ -6,7 +6,8 @@ return {
     },
 
     keys = {
-        { "<C-n>", "<cmd> NvimTreeToggle <CR>", desc = "Toggle Neo-tree" },
+        { "<C-n>", "<cmd> NvimTreeToggle <CR>", desc = "Toggle Nvim-tree" },
+        { "<leader>e", "<cmd> NvimTreeFocus <CR>", desc = "Focus Nvim-tree" },
     },
 
     config = function()

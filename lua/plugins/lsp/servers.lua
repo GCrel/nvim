@@ -50,6 +50,10 @@ return {
                 vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)         -- Alias para rename
+                vim.keymap.set("n", "<leader>en", vim.diagnostic.goto_next, opts)  -- Next error
+                vim.keymap.set("n", "<leader>ep", vim.diagnostic.goto_prev, opts)  -- Previous error
+                vim.keymap.set("n", "<leader>eq", vim.diagnostic.setloclist, opts) -- Error quicklist
             end,
         })
 

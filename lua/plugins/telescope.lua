@@ -9,9 +9,9 @@ return {
 
     -- 💡 Lazy-load cuando se usan los atajos
     keys = {
-        { "<C-F>", "<cmd>Telescope live_grep<cr>", desc = "Grep" },
-        { "<C-P>", "<cmd>Telescope find_files<cr>", desc = "Find files" },
-        { "<C-o>", "<cmd>Telescope oldfiles<cr>", desc = "Old files" },
+        { "<leader>f", "<cmd>Telescope live_grep<cr>", desc = "Grep" },
+        { "<leader>p", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+        { "<leader>o", "<cmd>Telescope oldfiles<cr>", desc = "Old files" },
     },
 
     cmd = "Telescope", -- también carga cuando ejecutas :Telescope
