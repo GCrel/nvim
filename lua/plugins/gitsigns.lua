@@ -1,0 +1,8 @@
+return {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+        require('gitsigns').setup({
+            current_line_blame = false, -- ponelo true si querés el blame inline siempre visible
+        })
+    end,
+}

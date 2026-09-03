@@ -1,17 +1,22 @@
 return {
-  "neovim/nvim-lspconfig",
-  dependencies = {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "hrsh7th/cmp-nvim-lsp",
-  },
-  config = function()
+    "neovim/nvim-lspconfig",
+    dependencies = {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "hrsh7th/cmp-nvim-lsp",
+    },
+    config = function()
         require("mason").setup()
 
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
         require("mason-lspconfig").setup({
-            ensure_installed = { "lua_ls" },
+            ensure_installed = { "lua_ls", "jdtls" },
+
+            automatic_enable = {
+                exclude = { "jdtls" },
+            },
+
             handlers = {
                 function(server_name)
                     require("lspconfig")[server_name].setup({
@@ -50,25 +55,23 @@ return {
                 vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)         -- Alias para rename
+                vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)        -- Alias para rename
                 vim.keymap.set("n", "<leader>en", vim.diagnostic.goto_next, opts)  -- Next error
                 vim.keymap.set("n", "<leader>ep", vim.diagnostic.goto_prev, opts)  -- Previous error
                 vim.keymap.set("n", "<leader>eq", vim.diagnostic.setloclist, opts) -- Error quicklist
             end,
         })
 
-
-        local signs = {
-            Error = " ",
-            Warn  = " ",
-            Hint  = " ",
-            Info  = " ",
-        }
-
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        end
+        vim.diagnostic.config({
+            signs = {
+                text = {
+                    [vim.diagnostic.severity.ERROR] = " ",
+                    [vim.diagnostic.severity.WARN]  = " ",
+                    [vim.diagnostic.severity.HINT]  = " ",
+                    [vim.diagnostic.severity.INFO]  = " ",
+                },
+            },
+        })
 
         -- Automatic window when hovering over a diagnostic
         vim.api.nvim_create_autocmd("CursorHold", {
