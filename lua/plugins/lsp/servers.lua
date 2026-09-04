@@ -5,6 +5,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
     },
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
         require("mason").setup()
 

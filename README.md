@@ -63,34 +63,40 @@ Luego ejecutar: `:Lazy sync`
 nvim/
 ├── init.lua
 ├── lazy-lock.json
-├── README.md
-└── lua/
-    ├── config/
-    │   ├── keymaps.lua
-    │   ├── lazy.lua
-    │   └── settings.lua
-    └── plugins/
-        ├── alpha.lua
-        ├── autopairs.lua
-        ├── bufferline.lua
-        ├── comment.lua
-        ├── conform.lua
-        ├── copilot.lua
-        ├── dap.lua
-        ├── diffview.lua
-        ├── gitsigns.lua
-        ├── indent-blankline.lua
-        ├── jdtls.lua
-        ├── lualine.lua
-        ├── markdown.lua
-        ├── nvim-tree.lua
-        ├── telescope.lua
-        ├── theme.lua
-        ├── toggleterm.lua
-        ├── treesitter.lua
-        └── lsp/
-            ├── cmp.lua
-            └── servers.lua
+├── lua
+│   ├── config
+│   │   ├── keymaps.lua
+│   │   ├── lazy.lua
+│   │   └── options.lua
+│   └── plugins
+│       ├── coding
+│       │   ├── autopairs.lua
+│       │   ├── comment.lua
+│       │   ├── conform.lua
+│       │   └── copilot.lua
+│       ├── dap
+│       │   └── dap.lua
+│       ├── editor
+│       │   ├── nvim-tree.lua
+│       │   ├── telescope.lua
+│       │   ├── toggleterm.lua
+│       │   └── treesitter.lua
+│       ├── git
+│       │   ├── diffview.lua
+│       │   └── gitsigns.lua
+│       ├── lsp
+│       │   ├── cmp.lua
+│       │   ├── jdtls.lua
+│       │   └── servers.lua
+│       ├── markdown
+│       │   └── markdown.lua
+│       └── ui
+│           ├── alpha.lua
+│           ├── bufferline.lua
+│           ├── indent-blankline.lua
+│           ├── lualine.lua
+│           └── theme.lua
+└── README.md
 ```
 
 ## Plugins incluidos
