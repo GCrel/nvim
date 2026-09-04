@@ -2,12 +2,17 @@
 
 Configuración personal de Neovim v0.11.5, construida desde cero e integrada con:
 
-* **LSP** (nvim-lspconfig)
-* **Mason** (instalador LSP / linters / formatters)
+* **lazy.nvim** (gestor de plugins)
+* **LSP** (nvim-lspconfig + Mason)
 * **nvim-cmp** (autocompletado)
 * **Treesitter** (resaltado sintáctico)
+* **OneDarkPro** (tema) con UI moderna
+* **alpha-nvim** (dashboard de inicio)
+* **Copilot** (sugerencias con IA)
+* **nvim-dap** (debugging)
+* **Conform** (formateo automático)
+* **gitsigns / diffview** (integración con Git)
 * Atajos personalizados optimizados
-* Tema Catppuccin con UI moderna
 
 La configuración está diseñada para ser simple, modular y fácil de mantener.
 
@@ -68,18 +73,50 @@ nvim/
         ├── alpha.lua
         ├── autopairs.lua
         ├── bufferline.lua
-        ├── catppuccin.lua
         ├── comment.lua
+        ├── conform.lua
+        ├── copilot.lua
+        ├── dap.lua
+        ├── diffview.lua
+        ├── gitsigns.lua
         ├── indent-blankline.lua
+        ├── jdtls.lua
         ├── lualine.lua
+        ├── markdown.lua
         ├── nvim-tree.lua
         ├── telescope.lua
+        ├── theme.lua
         ├── toggleterm.lua
         ├── treesitter.lua
         └── lsp/
             ├── cmp.lua
             └── servers.lua
 ```
+
+## Plugins incluidos
+
+| Plugin | Función |
+|--------|---------|
+| lazy.nvim | Gestor de plugins |
+| alpha-nvim | Dashboard de inicio |
+| nvim-autopairs | Autocierre de pares |
+| bufferline.nvim | Línea de buffers |
+| onedarkpro.nvim (onedark_vivid) | Tema |
+| Comment.nvim | Comentarios |
+| conform.nvim | Formateo al guardar |
+| copilot.lua | Sugerencias con IA |
+| nvim-dap + dap-ui | Debugging |
+| diffview.nvim | Vista de diffs de Git |
+| gitsigns.nvim | Marcadores de Git en la línea |
+| indent-blankline | Guías de indentación |
+| nvim-jdtls | LSP de Java |
+| lualine.nvim | Barra de estado |
+| render-markdown.nvim | Renderizado de Markdown |
+| nvim-tree | Explorador de archivos |
+| telescope.nvim | Búsqueda fuzzy |
+| toggleterm.nvim | Terminal integrado |
+| nvim-treesitter | Resaltado e indentación |
+| nvim-cmp | Autocompletado |
 
 ---
 
@@ -88,8 +125,15 @@ nvim/
 | LSP | Lenguaje |
 |-----|----------|
 | lua_ls | Lua |
+| jdtls | Java |
 
 Para instalar más: `:Mason`
+
+El LSP de Java (jdtls) se configura automáticamente con:
+* Soporte para Maven, Gradle y `.git` como directorios raíz del proyecto
+* Lombok integrado (javaagent)
+* Debugging remoto (java-debug-adapter) y tests (java-test) vía Mason
+* Organización de imports, extracción de variables/constantes y ejecución de tests
 
 ---
 
@@ -132,9 +176,9 @@ Para instalar más: `:Mason`
 
 | Atajo | Acción |
 |-------|--------|
-| `<leader>f` | Buscar en archivos (grep) |
-| `<leader>p` | Buscar archivos |
-| `<leader>o` | Archivos recientes |
+| `<leader>f` | Buscar en archivos (live_grep) |
+| `<leader>p` | Buscar archivos (find_files) |
+| `<leader>o` | Archivos recientes (oldfiles) |
 | `<C-n>` | Toggle árbol de archivos |
 | `<leader>e` | Focus árbol de archivos |
 
@@ -188,15 +232,44 @@ Para instalar más: `:Mason`
 | `<S-Tab>` | Anterior sugerencia |
 | `<C-k>` | Scroll documentación arriba |
 | `<C-l>` | Scroll documentación abajo |
+| `<C-space>` | Forzar completado |
 | `<C-e>` | Cancelar completado |
 | `<CR>` | Confirmar selección |
+
+### Copilot (Insert Mode)
+
+| Atajo | Acción |
+|-------|--------|
+| `<C-y>` | Aceptar sugerencia |
+| `<Alt-]>` | Siguiente sugerencia |
+| `<Alt-[>` | Sugerencia anterior |
+| `<C-\>` | Descartar sugerencia |
+
+### Debugging (DAP)
+
+| Atajo | Acción |
+|-------|--------|
+| `<F5>` | Iniciar / continuar debug |
+| `<F10>` | Step over |
+| `<F11>` | Step into |
+| `<F12>` | Step out |
+| `<leader>b` | Toggle breakpoint |
+
+### Java (jdtls)
+
+| Atajo | Acción |
+|-------|--------|
+| `<leader>jo` | Organizar imports |
+| `<leader>jv` | Extraer variable |
+| `<leader>jc` | Extraer constante |
+| `<leader>tc` | Ejecutar test de la clase |
+| `<leader>tm` | Ejecutar test más cercano |
 
 ### Treesitter (Visual Mode)
 
 | Atajo | Acción |
 |-------|--------|
-| `<C-space>` | Iniciar selección incremental |
-| `<C-space>` | Expandir selección |
+| `<C-space>` | Iniciar / expandir selección incremental |
 | `<bs>` | Reducir selección |
 
 ---

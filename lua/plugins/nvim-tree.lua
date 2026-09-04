@@ -6,8 +6,8 @@ return {
     },
 
     keys = {
-        { "<C-n>", "<cmd> NvimTreeToggle <CR>", desc = "Toggle Nvim-tree" },
-        { "<leader>e", "<cmd> NvimTreeFocus <CR>", desc = "Focus Nvim-tree" },
+        { "<C-n>",     "<cmd> NvimTreeToggle <CR>", desc = "Toggle Nvim-tree" },
+        { "<leader>e", "<cmd> NvimTreeFocus <CR>",  desc = "Focus Nvim-tree" },
     },
 
     config = function()
@@ -32,8 +32,9 @@ return {
                 preserve_window_proportions = true,
             },
             git = {
-                enable = false,
-                ignore = true,
+                enable = true,
+                ignore = false,
+                timeout = 400,
             },
             filesystem_watchers = {
                 enable = true,
@@ -45,8 +46,9 @@ return {
             },
             renderer = {
                 root_folder_label = false,
-                highlight_git = false,
+                highlight_git = true,
                 highlight_opened_files = "none",
+                group_empty = true,
                 indent_markers = {
                     enable = false,
                 },
@@ -55,7 +57,7 @@ return {
                         file = true,
                         folder = true,
                         folder_arrow = true,
-                        git = false,
+                        git = true,
                     },
                     glyphs = {
                         default = "󰈚",
