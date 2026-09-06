@@ -77,7 +77,7 @@ nvim/
 │       ├── dap
 │       │   └── dap.lua
 │       ├── editor
-│       │   ├── nvim-tree.lua
+│       │   ├── neo-tree.lua
 │       │   ├── telescope.lua
 │       │   ├── toggleterm.lua
 │       │   └── treesitter.lua
@@ -118,7 +118,7 @@ nvim/
 | nvim-jdtls | LSP de Java |
 | lualine.nvim | Barra de estado |
 | render-markdown.nvim | Renderizado de Markdown |
-| nvim-tree | Explorador de archivos |
+| neo-tree | Explorador de archivos |
 | telescope.nvim | Búsqueda fuzzy |
 | toggleterm.nvim | Terminal integrado |
 | nvim-treesitter | Resaltado e indentación |
@@ -132,6 +132,7 @@ nvim/
 |-----|----------|
 | lua_ls | Lua |
 | jdtls | Java |
+| ltex_plus | Español (ortografía/gramática, es-AR) en markdown/text/gitcommit |
 
 Para instalar más: `:Mason`
 
@@ -185,8 +186,8 @@ El LSP de Java (jdtls) se configura automáticamente con:
 | `<leader>f` | Buscar en archivos (live_grep) |
 | `<leader>p` | Buscar archivos (find_files) |
 | `<leader>o` | Archivos recientes (oldfiles) |
-| `<C-n>` | Toggle árbol de archivos |
-| `<leader>e` | Focus árbol de archivos |
+| `<C-n>` | Toggle Neo-tree |
+| `<leader>e` | Focus Neo-tree |
 
 ### Comentarios
 
