@@ -107,7 +107,7 @@ nvim/
 | alpha-nvim | Dashboard de inicio |
 | nvim-autopairs | Autocierre de pares |
 | bufferline.nvim | Línea de buffers |
-| onedarkpro.nvim (onedark_vivid) | Tema |
+| onedark.nvim | Tema |
 | Comment.nvim | Comentarios |
 | conform.nvim | Formateo al guardar |
 | copilot.lua | Sugerencias con IA |
