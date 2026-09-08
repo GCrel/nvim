@@ -14,8 +14,12 @@ return {
 
     opts = {
         close_if_last_window = true,
-        sources = { "filesystem" },
+        sources = { "filesystem", "buffers", "git_status" },
         use_libuv_file_watcher = true,
+
+        source_selector = {
+            winbar = true,
+        },
 
         window = {
             position = "right",
@@ -24,11 +28,12 @@ return {
         },
 
         filesystem = {
+            async_directory_scan = false,
             group_empty_dirs = true,
             hijack_netrw_behavior = "open_default",
             bind_to_cwd = true,
             follow_current_file = {
-                enabled = true,
+                enabled = false,
             },
             filtered_items = {
                 hide_dotfiles = false,
