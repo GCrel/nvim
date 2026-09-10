@@ -1,7 +1,6 @@
 return {
     "numToStr/Comment.nvim",
-    event = "VeryLazy",
-
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
         local api = require("Comment.api")
 
