@@ -6,7 +6,6 @@ return {
             pattern = "java",
             callback = function()
                 local jdtls = require('jdtls')
-                local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
                 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
                 local workspace_dir = vim.fn.stdpath('data') .. '/jdtls-workspace/' .. project_name
@@ -14,7 +13,8 @@ return {
                 local bundles = {}
 
                 local java_debug_path = vim.fn.glob(
-                    vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
+                    vim.fn.stdpath("data") ..
+                    "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
                     true
                 )
                 if java_debug_path ~= "" then
@@ -32,18 +32,23 @@ return {
                 local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
                 local lombok_path = jdtls_path .. "/lombok.jar"
 
+                local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+                local extendedClientCapabilities = jdtls.extendedClientCapabilities
+                extendedClientCapabilities.resolveAdditionalTextEditsOnCompletionAcceptance = true
+
                 local config = {
                     capabilities = capabilities,
-                    
+
                     init_options = {
-                            bundles = bundles,
-                            extendedClientCapabilities = extendedClientCapabilities,
+                        bundles = bundles,
+                        extendedClientCapabilities = extendedClientCapabilities,
                     },
 
                     cmd = {
                         vim.fn.stdpath("data") .. "/mason/bin/jdtls",
                         '--jvm-arg=-javaagent:' .. lombok_path,
-                        '-data', workspace_dir   
+                        '-data', workspace_dir
                     },
 
                     root_dir = vim.fs.dirname(vim.fs.find({
@@ -67,15 +72,20 @@ return {
                     on_attach = function(client, bufnr)
                         local opts = { silent = true, buffer = bufnr }
 
-                        vim.keymap.set('n', '<leader>jo', jdtls.organize_imports, { desc = "Organizar Imports", buffer = bufnr })
-                        vim.keymap.set('n', '<leader>jv', jdtls.extract_variable, { desc = "Extraer Variable", buffer = bufnr })
-                        vim.keymap.set('n', '<leader>jc', jdtls.extract_constant, { desc = "Extraer Constante", buffer = bufnr })
-                        vim.keymap.set('n', '<leader>tc', jdtls.test_class, { desc = "Ejecutar Test de Clase", buffer = bufnr })
-                        vim.keymap.set('n', '<leader>tm', jdtls.test_nearest_method, { desc = "Ejecutar Test Cercano", buffer = bufnr })
+                        vim.keymap.set('n', '<leader>jo', jdtls.organize_imports,
+                            { desc = "Organizar Imports", buffer = bufnr })
+                        vim.keymap.set('n', '<leader>jv', jdtls.extract_variable,
+                            { desc = "Extraer Variable", buffer = bufnr })
+                        vim.keymap.set('n', '<leader>jc', jdtls.extract_constant,
+                            { desc = "Extraer Constante", buffer = bufnr })
+                        vim.keymap.set('n', '<leader>tc', jdtls.test_class,
+                            { desc = "Ejecutar Test de Clase", buffer = bufnr })
+                        vim.keymap.set('n', '<leader>tm', jdtls.test_nearest_method,
+                            { desc = "Ejecutar Test Cercano", buffer = bufnr })
 
                         jdtls.setup_dap({ hotcodereplace = 'auto' })
                         require('jdtls.dap').setup_dap_main_class_configs()
-                    end,               
+                    end,
                 }
 
                 jdtls.start_or_attach(config)

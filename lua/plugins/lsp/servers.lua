@@ -3,13 +3,13 @@ return {
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
     },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
         require("mason").setup()
 
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        local capabilities = require('blink.cmp').get_lsp_capabilities()
 
         require("mason-lspconfig").setup({
             ensure_installed = { "lua_ls", "jdtls", "ltex_plus" },
@@ -52,8 +52,7 @@ return {
                                 language = "es-AR",
                             },
                         },
-                    }
-                    )
+                    })
                 end,
             },
         })
@@ -69,10 +68,10 @@ return {
                 vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)        -- Alias para rename
-                vim.keymap.set("n", "<leader>en", vim.diagnostic.goto_next, opts)  -- Next error
-                vim.keymap.set("n", "<leader>ep", vim.diagnostic.goto_prev, opts)  -- Previous error
-                vim.keymap.set("n", "<leader>eq", vim.diagnostic.setloclist, opts) -- Error quicklist
+                vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)
+                vim.keymap.set("n", "<leader>en", vim.diagnostic.goto_next, opts)
+                vim.keymap.set("n", "<leader>ep", vim.diagnostic.goto_prev, opts)
+                vim.keymap.set("n", "<leader>eq", vim.diagnostic.setloclist, opts)
             end,
         })
 
@@ -87,7 +86,6 @@ return {
             },
         })
 
-        -- Automatic window when hovering over a diagnostic
         vim.api.nvim_create_autocmd("CursorHold", {
             callback = function()
                 vim.diagnostic.open_float(nil, {
