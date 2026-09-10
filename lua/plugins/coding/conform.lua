@@ -2,6 +2,19 @@ return {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
+    dependencies = {
+        "zapling/mason-conform.nvim",
+    },
+    keys = {
+        {
+            "<leader>fm",
+            function()
+                require("conform").format({ lsp_fallback = true })
+            end,
+            mode = "n",
+            desc = "Formatear documento",
+        },
+    },
     opts = {
         formatters_by_ft = {
             java = { "google-java-format" },
@@ -16,4 +29,11 @@ return {
             lsp_format = "fallback",
         },
     },
+    config = function(_, opts)
+        require("conform").setup(opts)
+        
+        require("mason-conform").setup({
+            ensure_installed = { "google-java-format" },
+        })
+    end,
 }

@@ -23,6 +23,3 @@ map("n", "<C-k>", ":move .-2<cr>", opts)       -- Move line up (normal)
 -- Search and select
 map("n", "<leader>s", "v<C-$>", opts) -- Select to end of line
 map("n", "<leader>sl", "^v$h", opts)  -- Select entire line
-
--- Formatting
-map("n", "<leader>fm", "<cmd>lua vim.lsp.buf.format()<cr>", opts) -- Format document
