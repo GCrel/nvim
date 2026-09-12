@@ -12,10 +12,12 @@ return {
         local capabilities = require('blink.cmp').get_lsp_capabilities()
 
         require("mason-lspconfig").setup({
-            ensure_installed = { "lua_ls", "jdtls", "ltex_plus" },
+            ensure_installed = { "lua_ls", "jdtls", "ltex_plus", "ts_ls", "angularls", "html", "cssls", "emmet_ls",
+                "eslint",
+            },
 
             automatic_enable = {
-                exclude = { "jdtls", "ltex_plus" },
+                exclude = { "jdtls", "ltex_plus", "angularls" },
             },
 
             handlers = {
@@ -52,6 +54,23 @@ return {
                                 language = "es-AR",
                             },
                         },
+                    })
+                end,
+
+                ["angularls"] = function()
+                    local project_library_path = vim.fn.getcwd() .. "/node_modules"
+                    local cmd = {
+                        "ngserver", "--stdio",
+                        "--tsProbeLocations", project_library_path,
+                        "--ngProbeLocations", project_library_path,
+                    }
+                    require("lspconfig").angularls.setup({
+                        capabilities = capabilities,
+                        cmd = cmd,
+                        on_new_config = function(new_config, _)
+                            new_config.cmd = cmd
+                        end,
+                        root_dir = require("lspconfig.util").root_pattern("angular.json"),
                     })
                 end,
             },

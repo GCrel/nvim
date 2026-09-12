@@ -18,6 +18,10 @@ return {
     opts = {
         formatters_by_ft = {
             java = { "google-java-format" },
+            typescript = { "prettier" },
+            html = { "prettier" },
+            scss = { "prettier" },
+            css = { "prettier" },
         },
         formatters = {
             ["google-java-format"] = {
@@ -31,9 +35,9 @@ return {
     },
     config = function(_, opts)
         require("conform").setup(opts)
-        
+
         require("mason-conform").setup({
-            ensure_installed = { "google-java-format" },
+            ensure_installed = { "google-java-format", "prettier" },
         })
     end,
 }

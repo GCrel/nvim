@@ -3,11 +3,10 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     ops = {
-        ensure_installed = { "lua" },
-
+        ensure_installed = { "java", "lua", "html", "css", "scss", "javascript", "typescript", "angular", "markdown" },
         sync_install = false,
         auto_install = true,
-      
+
         highlight = {
             enable = true,
             additional_vim_regex_highlighting = false,
