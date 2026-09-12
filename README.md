@@ -4,7 +4,7 @@ Configuración personal de Neovim v0.11.5, construida desde cero e integrada con
 
 * **lazy.nvim** (gestor de plugins)
 * **LSP** (nvim-lspconfig + Mason)
-* **nvim-cmp** (autocompletado)
+* **blink.cmp** (autocompletado)
 * **Treesitter** (resaltado sintáctico)
 * **OneDarkPro** (tema) con UI moderna
 * **alpha-nvim** (dashboard de inicio)
@@ -84,10 +84,10 @@ nvim/
 │       ├── git
 │       │   ├── diffview.lua
 │       │   └── gitsigns.lua
-│       ├── lsp
-│       │   ├── cmp.lua
-│       │   ├── jdtls.lua
-│       │   └── servers.lua
+│       ├── lsp
+│       │   ├── blink-cmp.lua
+│       │   ├── jdtls.lua
+│       │   └── servers.lua
 │       ├── markdown
 │       │   └── markdown.lua
 │       └── ui
@@ -107,9 +107,10 @@ nvim/
 | alpha-nvim | Dashboard de inicio |
 | nvim-autopairs | Autocierre de pares |
 | bufferline.nvim | Línea de buffers |
-| onedark.nvim | Tema |
+| onedarkpro.nvim (onedark_vivid) | Tema |
 | Comment.nvim | Comentarios |
-| conform.nvim | Formateo al guardar |
+| blink.cmp | Autocompletado (LSP, buffer, snippets, path) |
+| conform.nvim + mason-conform | Formateo al guardar (google-java-format, prettier) |
 | copilot.lua | Sugerencias con IA |
 | nvim-dap + dap-ui | Debugging |
 | diffview.nvim | Vista de diffs de Git |
@@ -122,7 +123,6 @@ nvim/
 | telescope.nvim | Búsqueda fuzzy |
 | toggleterm.nvim | Terminal integrado |
 | nvim-treesitter | Resaltado e indentación |
-| nvim-cmp | Autocompletado |
 
 ---
 
@@ -133,8 +133,16 @@ nvim/
 | lua_ls | Lua |
 | jdtls | Java |
 | ltex_plus | Español (ortografía/gramática, es-AR) en markdown/text/gitcommit |
+| ts_ls | TypeScript / JavaScript |
+| angularls | Angular |
+| html | HTML |
+| cssls | CSS |
+| emmet_ls | Emmet (HTML/CSS) |
+| eslint | ESLint (JS/TS) |
 
 Para instalar más: `:Mason`
+
+El LSP de Angular (`angularls`) se configura automáticamente buscando los `ngserver` en el `node_modules` del proyecto y tomando `angular.json` como raíz.
 
 El LSP de Java (jdtls) se configura automáticamente con:
 * Soporte para Maven, Gradle y `.git` como directorios raíz del proyecto
@@ -220,7 +228,7 @@ El LSP de Java (jdtls) se configura automáticamente con:
 | `<space>rn` | Rename símbolo |
 | `<leader>rr` | Rename (alternativo) |
 | `<space>ca` | Code Actions |
-| `<leader>fm` | Formatear documento |
+| `<leader>fm` | Formatear documento (conform) |
 
 ### LSP - Diagnósticos
 
@@ -230,18 +238,19 @@ El LSP de Java (jdtls) se configura automáticamente con:
 | `<leader>ep` | Error anterior |
 | `<leader>eq` | Mostrar lista de errores |
 
-### Autocompletado (Insert Mode)
+### Autocompletado (Insert Mode) — blink.cmp
 
 | Atajo | Acción |
 |-------|--------|
-| `<C-j>` | Completar / mostrar sugerencias |
-| `<Tab>` | Siguiente sugerencia |
-| `<S-Tab>` | Anterior sugerencia |
+| `<Tab>` | Siguiente sugerencia / expandir snippet |
+| `<S-Tab>` | Anterior sugerencia / retroceder snippet |
+| `<C-Space>` | Mostrar sugerencias |
 | `<C-k>` | Scroll documentación arriba |
 | `<C-l>` | Scroll documentación abajo |
-| `<C-space>` | Forzar completado |
-| `<C-e>` | Cancelar completado |
-| `<CR>` | Confirmar selección |
+| `<C-e>` | Ocultar menú |
+| `<CR>` | Aceptar selección |
+
+Fuentes: `lsp`, `path`, `snippets` (LuaSnip + friendly-snippets), `buffer`.
 
 ### Copilot (Insert Mode)
 
@@ -280,15 +289,3 @@ El LSP de Java (jdtls) se configura automáticamente con:
 | `<bs>` | Reducir selección |
 
 ---
-
-## Información del sistema
-
-Configuración inicializada con:
-
-```
-NVIM v0.11.5
-LuaJIT 2.1.1741730670
-```
-
----
-
