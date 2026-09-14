@@ -28,12 +28,11 @@ return {
         },
 
         filesystem = {
-            async_directory_scan = false,
-            group_empty_dirs = true,
+            group_empty_dirs = false,
             hijack_netrw_behavior = "open_default",
             bind_to_cwd = true,
             follow_current_file = {
-                enabled = false,
+                enabled = true,
             },
             filtered_items = {
                 hide_dotfiles = false,

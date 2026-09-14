@@ -3,13 +3,19 @@ return {
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     dependencies = {
-        "zapling/mason-conform.nvim",
+        {
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
+            dependencies = { "williamboman/mason.nvim" },
+            opts = {
+                ensure_installed = { "prettier" },
+            },
+        },
     },
     keys = {
         {
             "<leader>fm",
             function()
-                require("conform").format({ lsp_fallback = true })
+                require("conform").format({ lsp_format = "fallback" })
             end,
             mode = "n",
             desc = "Formatear documento",
@@ -17,27 +23,14 @@ return {
     },
     opts = {
         formatters_by_ft = {
-            java = { "google-java-format" },
             typescript = { "prettier" },
             html = { "prettier" },
             scss = { "prettier" },
             css = { "prettier" },
-        },
-        formatters = {
-            ["google-java-format"] = {
-                prepend_args = { "--aosp" },
-            },
         },
         format_on_save = {
             timeout_ms = 1000,
             lsp_format = "fallback",
         },
     },
-    config = function(_, opts)
-        require("conform").setup(opts)
-
-        require("mason-conform").setup({
-            ensure_installed = { "google-java-format", "prettier" },
-        })
-    end,
 }

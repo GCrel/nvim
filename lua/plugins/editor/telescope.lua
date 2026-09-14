@@ -4,17 +4,16 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-lua/popup.nvim",
         { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
-        { "nvim-telescope/telescope-fzy-native.nvim", lazy = true },
+        { "nvim-telescope/telescope-fzy-native.nvim",   lazy = true },
     },
 
-    -- 💡 Lazy-load cuando se usan los atajos
     keys = {
-        { "<leader>f", "<cmd>Telescope live_grep<cr>", desc = "Grep" },
+        { "<leader>f", "<cmd>Telescope live_grep<cr>",  desc = "Grep" },
         { "<leader>p", "<cmd>Telescope find_files<cr>", desc = "Find files" },
-        { "<leader>o", "<cmd>Telescope oldfiles<cr>", desc = "Old files" },
+        { "<leader>o", "<cmd>Telescope oldfiles<cr>",   desc = "Old files" },
     },
 
-    cmd = "Telescope", -- también carga cuando ejecutas :Telescope
+    cmd = "Telescope",
 
     config = function()
         local telescope = require("telescope")
@@ -70,4 +69,3 @@ return {
         telescope.load_extension("file_browser")
     end,
 }
-

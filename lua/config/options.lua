@@ -46,5 +46,3 @@ opt.pumheight = 10
 -- Leader keys
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
-
-

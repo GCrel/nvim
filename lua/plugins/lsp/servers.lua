@@ -30,18 +30,6 @@ return {
                 ["lua_ls"] = function()
                     require("lspconfig").lua_ls.setup({
                         capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { "vim" },
-                                },
-                                workspace = {
-                                    library = vim.api.nvim_get_runtime_file("", true),
-                                    checkThirdParty = false,
-                                },
-                                telemetry = { enable = false },
-                            },
-                        },
                     })
                 end,
 
@@ -88,13 +76,14 @@ return {
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
                 vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)
-                vim.keymap.set("n", "<leader>en", vim.diagnostic.goto_next, opts)
-                vim.keymap.set("n", "<leader>ep", vim.diagnostic.goto_prev, opts)
+                vim.keymap.set("n", "<leader>en", function() vim.diagnostic.jump({ count = 1 }) end, opts)
+                vim.keymap.set("n", "<leader>ep", function() vim.diagnostic.jump({ count = -1 }) end, opts)
                 vim.keymap.set("n", "<leader>eq", vim.diagnostic.setloclist, opts)
             end,
         })
 
         vim.diagnostic.config({
+            update_in_insert = true,
             signs = {
                 text = {
                     [vim.diagnostic.severity.ERROR] = " ",
@@ -104,6 +93,11 @@ return {
                 },
             },
         })
+
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = false, underline = true, sp = "#ff5555" })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = false, underdotted = true, sp = "#ffb86c" })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = false, underdashed = true, sp = "#8be9fd" })
+        vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = false, underline = true, sp = "#50fa7b" })
 
         vim.api.nvim_create_autocmd("CursorHold", {
             callback = function()
