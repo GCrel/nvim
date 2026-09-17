@@ -6,14 +6,14 @@ return {
 
         vim.keymap.set(
             "n",
-            "<C-_>",
+            "<C-/>",
             api.toggle.linewise.current,
             { noremap = true, silent = true, desc = "Toggle comment line" }
         )
 
         vim.keymap.set(
             "v",
-            "<C-_>",
+            "<C-/>",
             function()
                 api.toggle.linewise(vim.fn.visualmode())
             end,
