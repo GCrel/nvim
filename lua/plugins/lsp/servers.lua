@@ -9,61 +9,37 @@ return {
     config = function()
         require("mason").setup()
 
-        local capabilities = require('blink.cmp').get_lsp_capabilities()
+        vim.lsp.config("*", {
+            capabilities = require("util.lsp").capabilities()
 
-        require("mason-lspconfig").setup({
-            ensure_installed = { "lua_ls", "jdtls", "ltex_plus", "ts_ls", "angularls", "html", "cssls", "emmet_ls",
-                "eslint",
-            },
+        })
 
-            automatic_enable = {
-                exclude = { "jdtls", "ltex_plus", "angularls" },
-            },
-
-            handlers = {
-                function(server_name)
-                    require("lspconfig")[server_name].setup({
-                        capabilities = capabilities,
-                    })
-                end,
-
-                ["lua_ls"] = function()
-                    require("lspconfig").lua_ls.setup({
-                        capabilities = capabilities,
-                    })
-                end,
-
-                ["ltex_plus"] = function()
-                    require("lspconfig").ltex.setup({
-                        capabilities = capabilities,
-                        filetypes = { "markdown", "text", "gitcommit" },
-                        settings = {
-                            ltex = {
-                                language = "es-AR",
-                            },
-                        },
-                    })
-                end,
-
-                ["angularls"] = function()
-                    local project_library_path = vim.fn.getcwd() .. "/node_modules"
-                    local cmd = {
-                        "ngserver", "--stdio",
-                        "--tsProbeLocations", project_library_path,
-                        "--ngProbeLocations", project_library_path,
-                    }
-                    require("lspconfig").angularls.setup({
-                        capabilities = capabilities,
-                        cmd = cmd,
-                        on_new_config = function(new_config, _)
-                            new_config.cmd = cmd
-                        end,
-                        root_dir = require("lspconfig.util").root_pattern("angular.json"),
-                    })
-                end,
+        vim.lsp.config("ltex_plus", {
+            filetypes = { "markdown", "text", "gitcommit" },
+            settings = {
+                ltex = { language = "es-AR" },
             },
         })
 
+        local ng_project_lib = vim.fn.getcwd() .. "/node_modules"
+        vim.lsp.config("angularls", {
+            cmd = {
+                "ngserver", "--stdio",
+                "--tsProbeLocations", ng_project_lib,
+                "--ngProbeLocations", ng_project_lib,
+            },
+            root_dir = require("lspconfig.util").root_pattern("angular.json"),
+        })
+
+        require("mason-lspconfig").setup({
+            ensure_installed = {
+                "lua_ls", "jdtls", "ltex_plus", "ts_ls", "angularls",
+                "html", "cssls", "emmet_ls", "eslint",
+            },
+            automatic_enable = {
+                exclude = { "jdtls" },
+            },
+        })
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("UserLspConfig", {}),
             callback = function(ev)
@@ -72,7 +48,6 @@ return {
                 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-                vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
                 vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)
