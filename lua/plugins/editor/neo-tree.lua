@@ -5,6 +5,10 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
+        {
+            "antosha417/nvim-lsp-file-operations",
+            config = true,
+        },
     },
 
     keys = {
