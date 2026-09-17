@@ -18,7 +18,7 @@ return {
 
     opts = {
         close_if_last_window = true,
-        sources = { "filesystem", "buffers", "git_status" },
+        sources = { "filesystem" },
         use_libuv_file_watcher = true,
 
         source_selector = {
