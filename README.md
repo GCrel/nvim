@@ -7,6 +7,7 @@ Configuración personal de Neovim v0.11.5, construida desde cero e integrada con
 * **blink.cmp** (autocompletado)
 * **Treesitter** (resaltado sintáctico)
 * **OneDarkPro** (tema) con UI moderna
+* **noice.nvim** (mensajes y notificaciones mejorados)
 * **alpha-nvim** (dashboard de inicio)
 * **Copilot** (sugerencias con IA)
 * **nvim-dap** (debugging)
@@ -64,38 +65,42 @@ nvim/
 ├── init.lua
 ├── lazy-lock.json
 ├── lua
-│   ├── config
-│   │   ├── keymaps.lua
-│   │   ├── lazy.lua
-│   │   └── options.lua
-│   └── plugins
-│       ├── coding
-│       │   ├── autopairs.lua
-│       │   ├── comment.lua
-│       │   ├── conform.lua
-│       │   └── copilot.lua
-│       ├── dap
-│       │   └── dap.lua
-│       ├── editor
-│       │   ├── neo-tree.lua
-│       │   ├── telescope.lua
-│       │   ├── toggleterm.lua
-│       │   └── treesitter.lua
-│       ├── git
-│       │   ├── diffview.lua
-│       │   └── gitsigns.lua
+│   ├── config
+│   │   ├── keymaps.lua
+│   │   ├── lazy.lua
+│   │   └── options.lua
+│   ├── util
+│   │   └── lsp.lua
+│   └── plugins
+│       ├── coding
+│       │   ├── autopairs.lua
+│       │   ├── comment.lua
+│       │   ├── conform.lua
+│       │   └── copilot.lua
+│       ├── dap
+│       │   └── dap.lua
+│       ├── editor
+│       │   ├── neo-tree.lua
+│       │   ├── telescope.lua
+│       │   ├── toggleterm.lua
+│       │   └── treesitter.lua
+│       ├── git
+│       │   ├── diffview.lua
+│       │   └── gitsigns.lua
 │       ├── lsp
 │       │   ├── blink-cmp.lua
 │       │   ├── jdtls.lua
+│       │   ├── lazydev.lua
 │       │   └── servers.lua
-│       ├── markdown
-│       │   └── markdown.lua
-│       └── ui
-│           ├── alpha.lua
-│           ├── bufferline.lua
-│           ├── indent-blankline.lua
-│           ├── lualine.lua
-│           └── theme.lua
+│       ├── markdown
+│       │   └── markdown.lua
+│       └── ui
+│           ├── alpha.lua
+│           ├── bufferline.lua
+│           ├── indent-blankline.lua
+│           ├── lualine.lua
+│           ├── noice.lua
+│           └── theme.lua
 └── README.md
 ```
 
@@ -116,10 +121,12 @@ nvim/
 | diffview.nvim | Vista de diffs de Git |
 | gitsigns.nvim | Marcadores de Git en la línea |
 | indent-blankline | Guías de indentación |
+| noice.nvim | UI de mensajes, notificaciones y LSP |
+| lazydev.nvim | Soporte de librerías para Lua |
 | nvim-jdtls | LSP de Java |
 | lualine.nvim | Barra de estado |
 | render-markdown.nvim | Renderizado de Markdown |
-| neo-tree | Explorador de archivos |
+| neo-tree + nvim-lsp-file-operations | Explorador de archivos (rename/move vía LSP) |
 | telescope.nvim | Búsqueda fuzzy |
 | toggleterm.nvim | Terminal integrado |
 | nvim-treesitter | Resaltado e indentación |
@@ -201,8 +208,8 @@ El LSP de Java (jdtls) se configura automáticamente con:
 
 | Atajo | Acción |
 |-------|--------|
-| `<C-_>` | Comentar línea (normal) |
-| `<C-_>` | Comentar selección (visual) |
+| `<C-/>` | Comentar línea (normal) |
+| `<C-/>` | Comentar selección (visual) |
 
 ### Terminal
 
@@ -225,8 +232,7 @@ El LSP de Java (jdtls) se configura automáticamente con:
 
 | Atajo | Acción |
 |-------|--------|
-| `<space>rn` | Rename símbolo |
-| `<leader>rr` | Rename (alternativo) |
+| `<leader>rr` | Rename símbolo |
 | `<space>ca` | Code Actions |
 | `<leader>fm` | Formatear documento (conform) |
 
@@ -280,6 +286,7 @@ Fuentes: `lsp`, `path`, `snippets` (LuaSnip + friendly-snippets), `buffer`.
 | `<leader>jc` | Extraer constante |
 | `<leader>tc` | Ejecutar test de la clase |
 | `<leader>tm` | Ejecutar test más cercano |
+| `:FormatProject` | Formatea todos los `.java` bajo `src/` con conform |
 
 ### Treesitter (Visual Mode)
 
