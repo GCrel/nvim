@@ -15,9 +15,13 @@ Configuración personal de Neovim v0.11.5, construida desde cero e integrada con
 * **gitsigns / diffview** (integración con Git)
 * Atajos personalizados optimizados
 
-La configuración está diseñada para ser simple, modular y fácil de mantener.
-
 ---
+
+## Capturas
+
+![Dashboard de inicio](assets/dashboard.png)
+
+![Interfaz general](assets/UI.png)
 
 ## Requisitos previos
 
@@ -33,6 +37,23 @@ Descargar desde [https://www.nerdfonts.com/](https://www.nerdfonts.com/)
 | fd | Búsqueda de archivos |
 | Node.js | Algunos LSPs |
 | Go | LSP gopls (opcional) |
+
+### Dependencias de image.nvim (renderizado de imágenes)
+
+Este plugin requiere dependencias a nivel de sistema para crear el entorno de `hererocks`, compilar la librería `magick` y renderizar los gráficos.
+
+**Fedora:**
+
+```bash
+sudo dnf install gcc make unzip curl python3 ImageMagick ImageMagick-devel lua luarocks
+```
+
+> `ImageMagick-devel` es crítico. Si falla la instalación del plugin en Neovim, elimina la caché de rocas (`rm -rf ~/.local/share/nvim/lazy-rocks`) y reinicia el editor.
+
+**Windows:** la instalación nativa falla por incompatibilidades con LuaJIT FFI y por la falta de soporte de protocolos gráficos en consolas nativas.
+
+* Entorno recomendado: **WSL2** (instalando las dependencias de Linux listadas arriba).
+* Terminal recomendada: **WezTerm** desde Windows, ya que soporta el protocolo gráfico necesario para renderizar las imágenes emitidas desde WSL2.
 
 ---
 
@@ -93,6 +114,7 @@ nvim/
 │       │   ├── lazydev.lua
 │       │   └── servers.lua
 │       ├── markdown
+│       │   ├── image.lua
 │       │   └── markdown.lua
 │       └── ui
 │           ├── alpha.lua
@@ -126,6 +148,7 @@ nvim/
 | nvim-jdtls | LSP de Java |
 | lualine.nvim | Barra de estado |
 | render-markdown.nvim | Renderizado de Markdown |
+| image.nvim | Renderizado de imágenes (markdown, neorg, etc.) |
 | neo-tree + nvim-lsp-file-operations | Explorador de archivos (rename/move vía LSP) |
 | telescope.nvim | Búsqueda fuzzy |
 | toggleterm.nvim | Terminal integrado |

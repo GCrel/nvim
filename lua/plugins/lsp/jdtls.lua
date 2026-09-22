@@ -4,20 +4,18 @@ return {
     config = function()
         local jdtls = require('jdtls')
         local mason_data = vim.fn.stdpath("data") .. "/mason"
+        local is_win = vim.fn.has("win32") == 1 -- Detect if the OS is Windows
 
         local capabilities = require("util.lsp").capabilities()
-
         local bundles = {}
-        local java_debug_path = vim.fn.glob(
-            mason_data .. "/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true)
-        if java_debug_path ~= "" then
-            vim.list_extend(bundles, vim.split(java_debug_path, "\n"))
-        end
 
-        local java_test_path = vim.fn.glob(mason_data .. "/packages/java-test/extension/server/*.jar", true)
-        if java_test_path ~= "" then
-            vim.list_extend(bundles, vim.split(java_test_path, "\n"))
-        end
+        local java_debug_paths = vim.fn.glob(
+            mason_data .. "/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true,
+            true)
+        vim.list_extend(bundles, java_debug_paths)
+
+        local java_test_paths = vim.fn.glob(mason_data .. "/packages/java-test/extension/server/*.jar", true, true)
+        vim.list_extend(bundles, java_test_paths)
 
         local lombok_path = mason_data .. "/packages/jdtls/lombok.jar"
 
@@ -27,7 +25,7 @@ return {
         local dap_ready = false
 
         vim.api.nvim_create_user_command("FormatProject", function()
-            local files = vim.fn.systemlist("find src -name '*.java'")
+            local files = vim.fn.globpath("src", "**/*.java", true, true)
             for i, file in ipairs(files) do
                 vim.cmd("edit " .. vim.fn.fnameescape(file))
                 local bufnr = vim.api.nvim_get_current_buf()
@@ -54,6 +52,8 @@ return {
                 local project_name = vim.fn.fnamemodify(root_dir, ':t')
                 local workspace_dir = vim.fn.stdpath('data') .. '/jdtls-workspace/' .. project_name
 
+                local jdtls_bin = is_win and (mason_data .. "/bin/jdtls.cmd") or (mason_data .. "/bin/jdtls")
+
                 local config = {
                     capabilities = capabilities,
                     init_options = {
@@ -61,7 +61,7 @@ return {
                         extendedClientCapabilities = extendedClientCapabilities,
                     },
                     cmd = {
-                        mason_data .. "/bin/jdtls",
+                        jdtls_bin,
                         '--jvm-arg=-javaagent:' .. lombok_path,
                         '-data', workspace_dir,
                     },
