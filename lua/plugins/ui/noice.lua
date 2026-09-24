@@ -3,7 +3,6 @@ return {
     event = "VeryLazy",
     dependencies = {
         "MunifTanjim/nui.nvim",
-        "rcarriga/nvim-notify",
     },
     opts = {
         lsp = {
@@ -12,7 +11,7 @@ return {
                 ["vim.lsp.util.stylize_markdown"] = true,
                 ["cmp.entry.get_documentation"] = true,
             },
-            hover = { enabled = true, },
+            hover = { enabled = true },
             signature = { enabled = true }
         },
         routes = {

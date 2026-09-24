@@ -2,7 +2,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
-    ops = {
+    opts = {
         ensure_installed = { "java", "lua", "html", "css", "scss", "javascript", "typescript", "angular", "markdown" },
         sync_install = false,
         auto_install = true,

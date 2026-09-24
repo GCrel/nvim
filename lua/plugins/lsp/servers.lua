@@ -45,15 +45,16 @@ return {
             callback = function(ev)
                 local opts = { buffer = ev.buf }
                 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-                vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+                vim.keymap.set("n", "gd", function() Snacks.picker.lsp_definitions() end, opts)
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+                vim.keymap.set("n", "gi", function() Snacks.picker.lsp_implementations() end, opts)
                 vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-                vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                vim.keymap.set("n", "gr", function() Snacks.picker.lsp_references() end, opts)
                 vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts)
                 vim.keymap.set("n", "<leader>en", function() vim.diagnostic.jump({ count = 1 }) end, opts)
                 vim.keymap.set("n", "<leader>ep", function() vim.diagnostic.jump({ count = -1 }) end, opts)
                 vim.keymap.set("n", "<leader>eq", vim.diagnostic.setloclist, opts)
+                vim.keymap.set("n", "<leader>ss", function() Snacks.picker.lsp_symbols() end, opts)
             end,
         })
 

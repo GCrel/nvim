@@ -8,7 +8,7 @@ return {
                 theme = 'onedark',
                 component_separators = { left = '╱', right = '╱' },
                 section_separators = { left = '', right = '' },
-                disabled_filetypes = { 'NvimTree', "neo-tree", 'alpha', 'lazy', 'TelescopePrompt' },
+                disabled_filetypes = { 'alpha', 'lazy', 'TelescopePrompt' },
                 global_status = true,
             },
             sections = {
@@ -49,6 +49,7 @@ return {
                 lualine_y = {},
                 lualine_z = {}
             },
+            extensions = { 'neo-tree', 'lazy' }
         })
     end,
 }
