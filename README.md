@@ -7,8 +7,8 @@ Configuración personal de Neovim v0.11.5, construida desde cero e integrada con
 * **blink.cmp** (autocompletado)
 * **Treesitter** (resaltado sintáctico)
 * **OneDarkPro** (tema) con UI moderna
+* **snacks.nvim** (dashboard, picker, terminal, imágenes)
 * **noice.nvim** (mensajes y notificaciones mejorados)
-* **alpha-nvim** (dashboard de inicio)
 * **Copilot** (sugerencias con IA)
 * **nvim-dap** (debugging)
 * **Conform** (formateo automático)
@@ -33,27 +33,14 @@ Descargar desde [https://www.nerdfonts.com/](https://www.nerdfonts.com/)
 
 | Herramienta | Uso |
 |-------------|-----|
-| ripgrep | Búsquedas rápidas (Telescope) |
+| ripgrep | Búsquedas rápidas (Snacks picker / Telescope) |
 | fd | Búsqueda de archivos |
 | Node.js | Algunos LSPs |
 | Go | LSP gopls (opcional) |
 
-### Dependencias de image.nvim (renderizado de imágenes)
+### Renderizado de imágenes (snacks.nvim)
 
-Este plugin requiere dependencias a nivel de sistema para crear el entorno de `hererocks`, compilar la librería `magick` y renderizar los gráficos.
-
-**Fedora:**
-
-```bash
-sudo dnf install gcc make unzip curl python3 ImageMagick ImageMagick-devel lua luarocks
-```
-
-> `ImageMagick-devel` es crítico. Si falla la instalación del plugin en Neovim, elimina la caché de rocas (`rm -rf ~/.local/share/nvim/lazy-rocks`) y reinicia el editor.
-
-**Windows:** la instalación nativa falla por incompatibilidades con LuaJIT FFI y por la falta de soporte de protocolos gráficos en consolas nativas.
-
-* Entorno recomendado: **WSL2** (instalando las dependencias de Linux listadas arriba).
-* Terminal recomendada: **WezTerm** desde Windows, ya que soporta el protocolo gráfico necesario para renderizar las imágenes emitidas desde WSL2.
+El renderizado de imágenes (markdown, etc.) lo maneja `snacks.nvim`, que usa el protocolo gráfico de la terminal (kitty/sixel/iTerm) sin necesidad de dependencias de sistema adicionales.
 
 ---
 
@@ -102,8 +89,6 @@ nvim/
 │       │   └── dap.lua
 │       ├── editor
 │       │   ├── neo-tree.lua
-│       │   ├── telescope.lua
-│       │   ├── toggleterm.lua
 │       │   └── treesitter.lua
 │       ├── git
 │       │   ├── diffview.lua
@@ -114,14 +99,12 @@ nvim/
 │       │   ├── lazydev.lua
 │       │   └── servers.lua
 │       ├── markdown
-│       │   ├── image.lua
 │       │   └── markdown.lua
 │       └── ui
-│           ├── alpha.lua
 │           ├── bufferline.lua
-│           ├── indent-blankline.lua
 │           ├── lualine.lua
 │           ├── noice.lua
+│           ├── snacks.lua
 │           └── theme.lua
 └── README.md
 ```
@@ -131,7 +114,7 @@ nvim/
 | Plugin | Función |
 |--------|---------|
 | lazy.nvim | Gestor de plugins |
-| alpha-nvim | Dashboard de inicio |
+| snacks.nvim | Dashboard, picker, terminal, imágenes, indent, lazygit, scratch |
 | nvim-autopairs | Autocierre de pares |
 | bufferline.nvim | Línea de buffers |
 | onedarkpro.nvim (onedark_vivid) | Tema |
@@ -142,16 +125,12 @@ nvim/
 | nvim-dap + dap-ui | Debugging |
 | diffview.nvim | Vista de diffs de Git |
 | gitsigns.nvim | Marcadores de Git en la línea |
-| indent-blankline | Guías de indentación |
 | noice.nvim | UI de mensajes, notificaciones y LSP |
 | lazydev.nvim | Soporte de librerías para Lua |
 | nvim-jdtls | LSP de Java |
 | lualine.nvim | Barra de estado |
 | render-markdown.nvim | Renderizado de Markdown |
-| image.nvim | Renderizado de imágenes (markdown, neorg, etc.) |
 | neo-tree + nvim-lsp-file-operations | Explorador de archivos (rename/move vía LSP) |
-| telescope.nvim | Búsqueda fuzzy |
-| toggleterm.nvim | Terminal integrado |
 | nvim-treesitter | Resaltado e indentación |
 
 ---
@@ -221,11 +200,20 @@ El LSP de Java (jdtls) se configura automáticamente con:
 
 | Atajo | Acción |
 |-------|--------|
-| `<leader>f` | Buscar en archivos (live_grep) |
-| `<leader>p` | Buscar archivos (find_files) |
-| `<leader>o` | Archivos recientes (oldfiles) |
+| `<leader>f` | Buscar en archivos (grep) |
+| `<leader>p` | Buscar archivos |
+| `<leader>o` | Archivos recientes |
+| `<leader>b` | Buscar buffers |
 | `<C-n>` | Toggle Neo-tree |
 | `<leader>e` | Focus Neo-tree |
+
+### Git
+
+| Atajo | Acción |
+|-------|--------|
+| `<leader>gd` | Ver diffs de Git |
+| `<leader>gg` | Abrir Lazygit |
+| `<leader>gb` | Abrir en GitHub (Git Browse) |
 
 ### Comentarios
 
@@ -234,12 +222,18 @@ El LSP de Java (jdtls) se configura automáticamente con:
 | `<C-/>` | Comentar línea (normal) |
 | `<C-/>` | Comentar selección (visual) |
 
-### Terminal
+### Terminal (snacks.nvim)
 
 | Atajo | Acción |
 |-------|--------|
 | `<leader>th` | Terminal horizontal |
 | `<leader>tf` | Terminal flotante |
+
+### Scratch
+
+| Atajo | Acción |
+|-------|--------|
+| `<leader>.` | Toggle buffer scratch |
 
 ### LSP - Navegación
 
@@ -298,7 +292,7 @@ Fuentes: `lsp`, `path`, `snippets` (LuaSnip + friendly-snippets), `buffer`.
 | `<F10>` | Step over |
 | `<F11>` | Step into |
 | `<F12>` | Step out |
-| `<leader>b` | Toggle breakpoint |
+| `<leader>tb` | Toggle breakpoint |
 
 ### Java (jdtls)
 
