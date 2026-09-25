@@ -11,6 +11,8 @@ return {
         },
     },
 
+    lazy = false,
+
     keys = {
         { "<C-n>",     "<cmd>Neotree toggle<CR>", desc = "Toggle Neo-tree" },
         { "<leader>e", "<cmd>Neotree focus<CR>",  desc = "Focus Neo-tree" },
@@ -19,7 +21,6 @@ return {
     opts = {
         close_if_last_window = true,
         sources = { "filesystem" },
-        use_libuv_file_watcher = true,
 
         source_selector = {
             winbar = true,
@@ -33,11 +34,10 @@ return {
 
         filesystem = {
             group_empty_dirs = false,
-            hijack_netrw_behavior = "open_default",
-            bind_to_cwd = true,
             follow_current_file = {
                 enabled = true,
             },
+            use_libuv_file_watcher = true,
             filtered_items = {
                 hide_dotfiles = false,
                 hide_gitignored = false,
@@ -45,10 +45,6 @@ return {
         },
 
         default_component_configs = {
-            name = {
-                trailing_slash = false,
-                use_git_status_colors = true,
-            },
             git_status = {
                 symbols = {
                     unstaged = "✗",
