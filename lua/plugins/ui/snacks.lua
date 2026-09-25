@@ -77,6 +77,7 @@ return {
         words = { enabled = true },
         scratch = { enabled = true },
         statuscolumn = { enabled = true },
+        scroll = { enabled = true, },
     },
 
     keys = {
