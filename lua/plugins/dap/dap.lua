@@ -3,15 +3,6 @@ return {
     dependencies = {
         "rcarriga/nvim-dap-ui",
         "nvim-neotest/nvim-nio",
-        {
-            "jay-babu/mason-nvim-dap.nvim",
-            dependencies = { "williamboman/mason.nvim" },
-            opts = {
-                ensure_installed = { "java-debug-adapter", "java-test" },
-                automatic_installation = true,
-                handlers = {},
-            },
-        },
     },
     keys = {
         { "<F5>",       function() require("dap").continue() end,          desc = "Iniciar/Continuar Debug" },
@@ -23,6 +14,12 @@ return {
     config = function()
         local dap = require("dap")
         local dapui = require("dapui")
+
+        -- Icons for breakpoints and current line
+        vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DiagnosticSignError', linehl = '', numhl = '' })
+        vim.fn.sign_define('DapBreakpointCondition',
+            { text = '◆', texthl = 'DiagnosticSignWarn', linehl = '', numhl = '' })
+        vim.fn.sign_define('DapStopped', { text = '', texthl = 'DiagnosticSignInfo', linehl = 'CursorLine', numhl = '' })
 
         dapui.setup()
 

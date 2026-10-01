@@ -3,11 +3,23 @@ return {
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
         "saghen/blink.cmp",
     },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
         require("mason").setup()
+
+        require("mason-tool-installer").setup({
+            ensure_installed = {
+                "prettier",
+                "java-debug-adapter",
+                "java-test"
+            },
+            auto_update = false,
+            run_on_start = true,
+        })
+
 
         vim.lsp.config("*", {
             capabilities = require("util.lsp").capabilities()

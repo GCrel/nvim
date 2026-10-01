@@ -2,15 +2,6 @@ return {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
-    dependencies = {
-        {
-            "WhoIsSethDaniel/mason-tool-installer.nvim",
-            dependencies = { "williamboman/mason.nvim" },
-            opts = {
-                ensure_installed = { "prettier" },
-            },
-        },
-    },
     keys = {
         {
             "<leader>fm",
@@ -29,8 +20,8 @@ return {
             css = { "prettier" },
         },
         format_on_save = {
+            lsp_format = "never",
             timeout_ms = 1000,
-            lsp_format = "fallback",
         },
     },
 }
