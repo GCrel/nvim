@@ -1,25 +1,19 @@
 return {
     "numToStr/Comment.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-        local api = require("Comment.api")
-
-        vim.keymap.set(
-            "n",
+    cmd = "Comment",
+    keys = {
+        {
             "<C-/>",
-            api.toggle.linewise.current,
-            { noremap = true, silent = true, desc = "Toggle comment line" }
-        )
-
-        vim.keymap.set(
-            "v",
+            function() require("Comment.api").toggle.linewise.current() end,
+            mode = "n",
+            desc = "Toggle comment line",
+        },
+        {
             "<C-/>",
-            function()
-                api.toggle.linewise(vim.fn.visualmode())
-            end,
-            { noremap = true, silent = true, desc = "Toggle comment selection" }
-        )
-
-        require("Comment").setup()
-    end,
+            function() require("Comment.api").toggle.linewise(vim.fn.visualmode()) end,
+            mode = "v",
+            desc = "Toggle comment selection",
+        },
+    },
+    opts = {},
 }

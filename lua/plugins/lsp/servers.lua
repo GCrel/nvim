@@ -4,7 +4,7 @@ return {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "WhoIsSethDaniel/mason-tool-installer.nvim",
-        "saghen/blink.cmp",
+        "Crysthamus/nvim-file-operations",
     },
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -22,8 +22,10 @@ return {
 
 
         vim.lsp.config("*", {
-            capabilities = require("util.lsp").capabilities()
-
+            before_init = function(params)
+                params.capabilities = vim.tbl_deep_extend("force", params.capabilities,
+                    require("util.lsp").capabilities())
+            end,
         })
 
         vim.lsp.config("ltex_plus", {
@@ -89,6 +91,12 @@ return {
 
         vim.api.nvim_create_autocmd("CursorHold", {
             callback = function()
+                local diags = vim.diagnostic.get(0, {
+                    severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN },
+                })
+                if #diags == 0 then
+                    return
+                end
                 vim.diagnostic.open_float(nil, {
                     focus = false,
                     border = "rounded",

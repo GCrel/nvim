@@ -25,5 +25,27 @@ require("lazy").setup({
         { import = "plugins.markdown" },
     },
     install = { colorscheme = { "habamax" } },
-    checker = { enabled = true },
+
+    checker = { enabled = true, notify = false },
+    change_detection = { notify = false },
+
+    -- No se usa lazy.pkg(), evita escanear rockspec/packspec del directorio actual
+    pkg = { enabled = false },
+
+    ui = { border = "rounded" },
+
+    performance = {
+        rtp = {
+            -- neo-tree reemplaza a netrw; el resto son complementos que no se usan
+            disabled_plugins = {
+                "gzip",
+                "matchit",
+                "netrwPlugin",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "zipPlugin",
+            },
+        },
+    },
 })

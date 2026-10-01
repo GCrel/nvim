@@ -13,7 +13,9 @@ return {
         },
     },
 
-    lazy = false,
+    lazy = true,
+
+    cmd = { "Neotree", "Neotree focus", "Neotree reveal_force_cwd" },
 
     keys = {
         { "<C-n>",     "<cmd>Neotree toggle<CR>", desc = "Toggle Neo-tree" },

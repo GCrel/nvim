@@ -1,13 +1,12 @@
 return {
     "saghen/blink.cmp",
     version = "*",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "InsertEnter",
     dependencies = {
         "L3MON4D3/LuaSnip",
         "rafamadriz/friendly-snippets",
     },
     opts = {
-        -- 'super-tab' viene integrado y reemplaza toda tu lógica de <Tab> y <S-Tab>
         keymap = {
             preset = "super-tab",
             ["<C-k>"] = { "scroll_documentation_up", "fallback" },
@@ -19,7 +18,6 @@ return {
 
         snippets = { preset = "luasnip" },
 
-        -- Fuentes incluidas por defecto (ya no necesitas instalar cmp-buffer, cmp-path, etc.)
         sources = {
             default = { "lsp", "path", "snippets", "buffer" },
         },
@@ -30,7 +28,6 @@ return {
         },
 
         appearance = {
-            -- Blink maneja los iconos nativamente sin necesidad de lspkind
             kind_icons = {
                 Text = "",
                 Method = "󰆧",
