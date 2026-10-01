@@ -9,7 +9,7 @@ return {
                 component_separators = { left = '╱', right = '╱' },
                 section_separators = { left = '', right = '' },
                 disabled_filetypes = { 'alpha', 'lazy', 'TelescopePrompt' },
-                global_status = true,
+                globalstatus = true,
             },
             sections = {
                 -- Left
@@ -49,7 +49,6 @@ return {
                 lualine_y = {},
                 lualine_z = {}
             },
-            extensions = { 'neo-tree', 'lazy' }
         })
     end,
 }

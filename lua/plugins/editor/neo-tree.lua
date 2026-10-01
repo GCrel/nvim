@@ -6,8 +6,10 @@ return {
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
         {
-            "antosha417/nvim-lsp-file-operations",
-            config = true,
+            "Crysthamus/nvim-file-operations",
+            config = function()
+                require("nvim-file-operations").setup()
+            end,
         },
     },
 
@@ -20,7 +22,6 @@ return {
 
     opts = {
         close_if_last_window = true,
-        sources = { "filesystem" },
 
         source_selector = {
             winbar = true,
