@@ -33,7 +33,7 @@ Descargar desde [https://www.nerdfonts.com/](https://www.nerdfonts.com/)
 
 | Herramienta | Uso |
 |-------------|-----|
-| ripgrep | Búsquedas rápidas (Snacks picker / Telescope) |
+| ripgrep | Búsquedas rápidas (Snacks picker) |
 | fd | Búsqueda de archivos |
 | Node.js | Algunos LSPs |
 | Go | LSP gopls (opcional) |
@@ -114,13 +114,14 @@ nvim/
 | Plugin | Función |
 |--------|---------|
 | lazy.nvim | Gestor de plugins |
-| snacks.nvim | Dashboard, picker, terminal, imágenes, indent, lazygit, scratch |
+| snacks.nvim | Dashboard, picker, terminal, imágenes, indent, lazygit, scratch, scroll |
 | nvim-autopairs | Autocierre de pares |
 | bufferline.nvim | Línea de buffers |
 | onedarkpro.nvim (onedark_vivid) | Tema |
 | Comment.nvim | Comentarios |
 | blink.cmp | Autocompletado (LSP, buffer, snippets, path) |
-| conform.nvim + mason-conform | Formateo al guardar (google-java-format, prettier) |
+| conform.nvim | Formateo al guardar (prettier: TS/HTML/SCSS/CSS) |
+| mason-tool-installer.nvim | Instala herramientas extra automáticamente |
 | copilot.lua | Sugerencias con IA |
 | nvim-dap + dap-ui | Debugging |
 | diffview.nvim | Vista de diffs de Git |
@@ -130,7 +131,7 @@ nvim/
 | nvim-jdtls | LSP de Java |
 | lualine.nvim | Barra de estado |
 | render-markdown.nvim | Renderizado de Markdown |
-| neo-tree + nvim-lsp-file-operations | Explorador de archivos (rename/move vía LSP) |
+| neo-tree + nvim-file-operations | Explorador de archivos (rename/move vía LSP) |
 | nvim-treesitter | Resaltado e indentación |
 
 ---
@@ -151,12 +152,14 @@ nvim/
 
 Para instalar más: `:Mason`
 
+`mason-tool-installer` asegura automáticamente herramientas extra al iniciar: `prettier`, `java-debug-adapter` y `java-test`.
+
 El LSP de Angular (`angularls`) se configura automáticamente buscando los `ngserver` en el `node_modules` del proyecto y tomando `angular.json` como raíz.
 
 El LSP de Java (jdtls) se configura automáticamente con:
 * Soporte para Maven, Gradle y `.git` como directorios raíz del proyecto
 * Lombok integrado (javaagent)
-* Debugging remoto (java-debug-adapter) y tests (java-test) vía Mason
+* Debugging remoto (java-debug-adapter) y tests (java-test) instalados vía Mason
 * Organización de imports, extracción de variables/constantes y ejecución de tests
 
 ---
@@ -239,11 +242,12 @@ El LSP de Java (jdtls) se configura automáticamente con:
 
 | Atajo | Acción |
 |-------|--------|
-| `gd` | Ir a definición |
+| `gd` | Ir a definición (picker) |
 | `gD` | Ir a declaración |
-| `gi` | Ir a implementación |
-| `gr` | Ver referencias |
+| `gi` | Ir a implementación (picker) |
+| `gr` | Ver referencias (picker) |
 | `K` | Mostrar hover |
+| `<leader>ss` | Buscar símbolos del documento (picker) |
 
 ### LSP - Edición
 
