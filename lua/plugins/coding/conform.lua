@@ -1,6 +1,5 @@
 return {
     "stevearc/conform.nvim",
-    event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     keys = {
         {
@@ -18,10 +17,6 @@ return {
             html = { "prettier" },
             scss = { "prettier" },
             css = { "prettier" },
-        },
-        format_on_save = {
-            lsp_format = "never",
-            timeout_ms = 1000,
         },
     },
 }
