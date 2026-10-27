@@ -11,7 +11,7 @@ Configuración personal de Neovim v0.11.5, construida desde cero e integrada con
 * **noice.nvim** (mensajes y notificaciones mejorados)
 * **Copilot** (sugerencias con IA)
 * **nvim-dap** (debugging)
-* **Conform** (formateo automático)
+* **Conform** (formateo bajo demanda)
 * **gitsigns / diffview** (integración con Git)
 * Atajos personalizados optimizados
 
@@ -36,7 +36,7 @@ Descargar desde [https://www.nerdfonts.com/](https://www.nerdfonts.com/)
 | ripgrep | Búsquedas rápidas (Snacks picker) |
 | fd | Búsqueda de archivos |
 | Node.js | Algunos LSPs |
-| Go | LSP gopls (opcional) |
+| JDK 25+ (JRE o JDK) | Ejecutar jdtls (ver sección Java) |
 
 ### Renderizado de imágenes (snacks.nvim)
 
@@ -74,10 +74,13 @@ nvim/
 ├── lazy-lock.json
 ├── lua
 │   ├── config
+│   │   ├── commands.lua
 │   │   ├── keymaps.lua
 │   │   ├── lazy.lua
+│   │   ├── lsp.lua
 │   │   └── options.lua
 │   ├── util
+│   │   ├── java.lua
 │   │   └── lsp.lua
 │   └── plugins
 │       ├── coding
@@ -120,7 +123,7 @@ nvim/
 | onedarkpro.nvim (onedark_vivid) | Tema |
 | Comment.nvim | Comentarios |
 | blink.cmp | Autocompletado (LSP, buffer, snippets, path) |
-| conform.nvim | Formateo al guardar (prettier: TS/HTML/SCSS/CSS) |
+| conform.nvim | Formateo manual con `<leader>fm` (prettier: TS/HTML/SCSS/CSS); no formatea al guardar |
 | mason-tool-installer.nvim | Instala herramientas extra automáticamente |
 | copilot.lua | Sugerencias con IA |
 | nvim-dap + dap-ui | Debugging |
@@ -131,7 +134,7 @@ nvim/
 | nvim-jdtls | LSP de Java |
 | lualine.nvim | Barra de estado |
 | render-markdown.nvim | Renderizado de Markdown |
-| neo-tree + nvim-file-operations | Explorador de archivos (rename/move vía LSP) |
+| neo-tree + nvim-file-operations | Explorador de archivos (rename vía LSP; jdtls solo anuncia `willRename`, no trata mover como refactor) |
 | nvim-treesitter | Resaltado e indentación |
 
 ---
@@ -161,6 +164,22 @@ El LSP de Java (jdtls) se configura automáticamente con:
 * Lombok integrado (javaagent)
 * Debugging remoto (java-debug-adapter) y tests (java-test) instalados vía Mason
 * Organización de imports, extracción de variables/constantes y ejecución de tests
+
+#### Versión de Java
+
+jdtls (>= 1.62) necesita Java 25+ para **ejecutarse**, pero el proyecto puede usar cualquier versión. `lua/util/java.lua` los separa:
+
+* Ejecuta jdtls con el Java más nuevo que encuentre.
+* Registra como runtimes del proyecto todos los JDK (con `javac`) encontrados; jdtls elige el que pida el `pom.xml`/`build.gradle`. Un JRE sirve para ejecutar jdtls pero no para compilar.
+* Si el más nuevo es menor que 25, avisa con una notificación.
+
+Busca en: sdkman, asdf, mise, jenv, `/usr/lib/jvm`, JDKs de macOS (`/Library/Java/JavaVirtualMachines`, Homebrew), `JAVA_HOME` y el `java` del `PATH`. Para otras ubicaciones:
+
+```bash
+export JDTLS_JAVA_DIRS="/opt/mis-jdks:/otra/ruta"   # cada entrada: un JDK o una carpeta con JDKs
+```
+
+Los JDK en Windows no se detectan automáticamente.
 
 ---
 
@@ -307,7 +326,7 @@ Fuentes: `lsp`, `path`, `snippets` (LuaSnip + friendly-snippets), `buffer`.
 | `<leader>jc` | Extraer constante |
 | `<leader>tc` | Ejecutar test de la clase |
 | `<leader>tm` | Ejecutar test más cercano |
-| `:FormatProject` | Formatea todos los `.java` bajo `src/` con conform |
+| `:FormatProject` | Formatea todos los `.java` bajo `src/` con conform (definido en `config/commands.lua`) |
 
 ### Treesitter (Visual Mode)
 
