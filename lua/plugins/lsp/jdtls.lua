@@ -17,27 +17,13 @@ return {
         local java_test_paths = vim.fn.glob(mason_data .. "/packages/java-test/extension/server/*.jar", true, true)
         vim.list_extend(bundles, java_test_paths)
 
+        local java_executable, java_runtimes = require("util.java").resolve()
         local lombok_path = mason_data .. "/packages/jdtls/lombok.jar"
 
         local extendedClientCapabilities = jdtls.extendedClientCapabilities
         extendedClientCapabilities.resolveAdditionalTextEditsOnCompletionAcceptance = true
 
         local dap_ready = false
-
-        vim.api.nvim_create_user_command("FormatProject", function()
-            local files = vim.fn.globpath("src", "**/*.java", true, true)
-            for i, file in ipairs(files) do
-                vim.cmd("edit " .. vim.fn.fnameescape(file))
-                local bufnr = vim.api.nvim_get_current_buf()
-                vim.wait(20000, function()
-                    return #vim.lsp.get_clients({ bufnr = bufnr, name = "jdtls" }) > 0
-                end, 100)
-                require("conform").format({ bufnr = bufnr, lsp_format = "fallback", timeout_ms = 5000 })
-                vim.cmd("write")
-                print(string.format("(%d/%d) %s", i, #files, file))
-            end
-            print("Listo: " .. #files .. " archivos formateados.")
-        end, {})
 
         vim.api.nvim_create_autocmd("FileType", {
             pattern = "java",
@@ -54,21 +40,25 @@ return {
 
                 local jdtls_bin = is_win and (mason_data .. "/bin/jdtls.cmd") or (mason_data .. "/bin/jdtls")
 
+                local cmd = { jdtls_bin, '--jvm-arg=-javaagent:' .. lombok_path, '-data', workspace_dir }
+                if java_executable then
+                    table.insert(cmd, 2, '--java-executable=' .. java_executable)
+                end
+
                 local config = {
                     capabilities = capabilities,
                     init_options = {
                         bundles = bundles,
                         extendedClientCapabilities = extendedClientCapabilities,
                     },
-                    cmd = {
-                        jdtls_bin,
-                        '--jvm-arg=-javaagent:' .. lombok_path,
-                        '-data', workspace_dir,
-                    },
+                    cmd = cmd,
                     root_dir = root_dir,
                     settings = {
                         java = {
                             signatureHelp = { enabled = true },
+                            configuration = {
+                                runtimes = java_runtimes,
+                            },
                             completion = {
                                 favoriteStaticMembers = {
                                     "org.junit.jupiter.api.Assertions.*",
