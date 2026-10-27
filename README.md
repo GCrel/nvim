@@ -6,7 +6,7 @@ Configuración personal de Neovim v0.11.5, construida desde cero e integrada con
 * **LSP** (nvim-lspconfig + Mason)
 * **blink.cmp** (autocompletado)
 * **Treesitter** (resaltado sintáctico)
-* **OneDarkPro** (tema) con UI moderna
+* **GitHub Theme** (tema github_dark_dimmed) con UI moderna
 * **snacks.nvim** (dashboard, picker, terminal, imágenes)
 * **noice.nvim** (mensajes y notificaciones mejorados)
 * **Copilot** (sugerencias con IA)
@@ -120,7 +120,7 @@ nvim/
 | snacks.nvim | Dashboard, picker, terminal, imágenes, indent, lazygit, scratch, scroll |
 | nvim-autopairs | Autocierre de pares |
 | bufferline.nvim | Línea de buffers |
-| onedarkpro.nvim (onedark_vivid) | Tema |
+| github-nvim-theme (github_dark_dimmed) | Tema |
 | Comment.nvim | Comentarios |
 | blink.cmp | Autocompletado (LSP, buffer, snippets, path) |
 | conform.nvim | Formateo manual con `<leader>fm` (prettier: TS/HTML/SCSS/CSS); no formatea al guardar |
