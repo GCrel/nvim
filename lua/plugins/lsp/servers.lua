@@ -13,7 +13,8 @@ return {
             ensure_installed = {
                 "prettier",
                 "java-debug-adapter",
-                "java-test"
+                "java-test",
+                "trivy",
             },
             auto_update = false,
             run_on_start = true,
