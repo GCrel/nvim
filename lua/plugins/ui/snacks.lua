@@ -78,6 +78,7 @@ return {
         scratch = { enabled = true },
         statuscolumn = { enabled = true },
         scroll = { enabled = true, },
+        animate = { enabled = true, },
     },
 
     keys = {
