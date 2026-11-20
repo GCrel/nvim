@@ -4,7 +4,11 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
-        "MunifTanjim/nui.nvim",
+        {
+            "MunifTanjim/nui.nvim",
+            -- shortcut: nui 3d425a7 (perf(tree)) corrompe el árbol con group_empty_dirs; quitar cuando nui/neo-tree lo arreglen
+            commit = "5959922",
+        },
         {
             "Crysthamus/nvim-file-operations",
             config = function()
@@ -36,7 +40,7 @@ return {
         },
 
         filesystem = {
-            group_empty_dirs = false,
+            group_empty_dirs = true,
             follow_current_file = {
                 enabled = true,
             },
