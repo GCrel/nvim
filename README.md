@@ -155,7 +155,7 @@ nvim/
 
 Para instalar más: `:Mason`
 
-`mason-tool-installer` asegura automáticamente herramientas extra al iniciar: `prettier`, `java-debug-adapter` y `java-test`.
+`mason-tool-installer` asegura automáticamente herramientas extra al iniciar: `prettier`, `java-debug-adapter`, `java-test` y `trivy`.
 
 El LSP de Angular (`angularls`) se configura automáticamente buscando los `ngserver` en el `node_modules` del proyecto y tomando `angular.json` como raíz.
 
@@ -327,6 +327,7 @@ Fuentes: `lsp`, `path`, `snippets` (LuaSnip + friendly-snippets), `buffer`.
 | `<leader>tc` | Ejecutar test de la clase |
 | `<leader>tm` | Ejecutar test más cercano |
 | `:FormatProject` | Formatea todos los `.java` bajo `src/` con conform (definido en `config/commands.lua`) |
+| `:DepScan` | Busca dependencias vulnerables con trivy (`pom.xml`, Gradle, Dockerfile) y abre la quickfix ordenada por severidad. La primera vez descarga la base de trivy |
 
 ### Treesitter (Visual Mode)
 
